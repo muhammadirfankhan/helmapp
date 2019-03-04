@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bkube-deployment
+  labels:
+    app: bkube
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: bkube
+      labels:
+        app: bkube
+    spec:
+      containers:
+      - name: bkube
+        image: b:b878d9e98bcd98311e7e6727f8e692e1d2fcf166
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: bkube
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: bkube-service
+spec:
+  selector:
+    app: bkube
+  ports:
+    - port: 8080
+  type: NodePort
+  
+  
